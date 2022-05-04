@@ -13,6 +13,11 @@ async function postMessage(req: Request, res: Response, _: NextFunction) {
   const msg = <Message>req.body;
   try {
     switch (msg.dest) {
+      case Destination.NONE:
+        // Message will arrive locally but not be forwarded.
+        response = newResponse(200, 'message received');
+        break;
+
       case Destination.DISCORD:
         // Send the message to a discord servers channel.
         const embed = newNotification(req.body);

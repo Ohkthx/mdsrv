@@ -1,4 +1,5 @@
 export enum Destination {
+  NONE = 'none',
   DISCORD = 'discord',
 }
 
