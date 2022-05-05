@@ -1,0 +1,7 @@
+.git*
+.cache
+.env
+dist
+commit_msg
+node_modules
+npm-debug.log

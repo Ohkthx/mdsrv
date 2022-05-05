@@ -19,15 +19,27 @@ Send a message to the distributor: rest-client/sendMessage.ts
 
 ## Message Format
 { \
-  source: string; \
-  sourceId: string; \
-  dest: string; \
-  destId: string; \
-  status: string; \
-  value: string; \
-  created: string; \
+&nbsp;&nbsp;source: string; \
+&nbsp;&nbsp;sourceId: string; \
+&nbsp;&nbsp;dest: string; \
+&nbsp;&nbsp;destId: string; \
+&nbsp;&nbsp;status: string; \
+&nbsp;&nbsp;value: string; \
+&nbsp;&nbsp;created: string; \
 }
 
 ## Configuration
 DEFAULT_REST_PORT is '5644'. \
 DISCORD_TOKEN needs to be set to use that feature.
+
+## Dockerize Application
+Keep in mind the default port is 5644, if you wish to use a different one then specify that in the Dockerfile and when you go to start the container. \
+\
+Build the application: \
+docker build . -t username/mdsrv \
+\
+Run the docker container: \
+docker run -dp 5644:5644 username/mdsrv:latest \
+\
+Specify an '.env' file to pass environment variables: \
+docker run --env-file ./.env -dp 5644:5644 username/mdsrv:latest
