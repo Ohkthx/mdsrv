@@ -19,13 +19,13 @@ Send a message to the distributor: rest-client/sendMessage.ts
 
 ## Message Format
 { \
-&nbsp;&nbsp;source: string; \
-&nbsp;&nbsp;sourceId: string; \
-&nbsp;&nbsp;dest: string; \
-&nbsp;&nbsp;destId: string; \
-&nbsp;&nbsp;status: string; \
-&nbsp;&nbsp;value: string; \
-&nbsp;&nbsp;created: string; \
+&nbsp;&nbsp;&nbsp;&nbsp;source: string; \
+&nbsp;&nbsp;&nbsp;&nbsp;sourceId: string; \
+&nbsp;&nbsp;&nbsp;&nbsp;dest: string; \
+&nbsp;&nbsp;&nbsp;&nbsp;destId: string; \
+&nbsp;&nbsp;&nbsp;&nbsp;status: string; \
+&nbsp;&nbsp;&nbsp;&nbsp;value: string; \
+&nbsp;&nbsp;&nbsp;&nbsp;created: string; \
 }
 
 ## Configuration
@@ -39,7 +39,13 @@ Build the application: \
 docker build . -t username/mdsrv \
 \
 Run the docker container: \
-docker run -dp 5644:5644 username/mdsrv:latest \
+docker run -dp 5644:5644 --name mdsrv username/mdsrv:latest \
 \
 Specify an '.env' file to pass environment variables: \
-docker run --env-file ./.env -dp 5644:5644 username/mdsrv:latest
+docker run --env-file ./.env -dp 5644:5644 --name mdsrv username/mdsrv:latest
+
+## Create Systemd Service
+podman generate systemd --name -f mdsrv \
+mv container-mdsrv.service /etc/systemd/user/. \
+systemctl daemon-reload \
+systemctl --user start container-mdsrv.service
