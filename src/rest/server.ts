@@ -1,7 +1,7 @@
 import http from 'http';
 import express, {Express, NextFunction, Request, Response} from 'express';
 import msgRouter from './routes/message';
-import {DEFAULT_REST_PORT} from '.';
+import {DEFAULT_MDSRV_PORT} from '.';
 
 const router: Express = express();
 
@@ -57,9 +57,9 @@ export class HTTPServer {
   static async start(port: number) {
     if (port < 0 || port > 65535) {
       console.warn(
-        `[REST Server] invalid port '${port}' provided, using '${DEFAULT_REST_PORT}'`,
+        `[REST Server] invalid port '${port}' provided, using '${DEFAULT_MDSRV_PORT}'`,
       );
-      port = DEFAULT_REST_PORT;
+      port = DEFAULT_MDSRV_PORT;
     }
     HTTPServer.httpServer.listen(port, () => {
       HTTPServer.isActive = true;

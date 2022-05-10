@@ -1,19 +1,17 @@
 import axios, {AxiosError} from 'axios';
 import {Destination, Message, Status} from '../message';
 import {config as envLoad} from 'dotenv';
-import {DEFAULT_REST_HOSTNAME, DEFAULT_REST_PORT} from '../rest';
+import {DEFAULT_MDSRV_HOSTNAME, DEFAULT_MDSRV_PORT} from '../rest';
 
 // Load the environment variables into process.env
 envLoad();
 
 // Get the HOSTNAME and PORT to create the URI.
-const HOSTNAME = process.env.DEFAULT_REST_HOSTNAME ?? DEFAULT_REST_HOSTNAME;
-let PORT = parseInt(process.env.DEFAULT_REST_PORT ?? '');
+const HOSTNAME = process.env.MDSRV_HOSTNAME ?? DEFAULT_MDSRV_HOSTNAME;
+let PORT = parseInt(process.env.MDSRV_PORT ?? '');
 if (isNaN(PORT)) {
-  PORT = DEFAULT_REST_PORT;
-  console.error(
-    `'DEFAULT_REST_PORT' is not set in '.env' file, using port '${PORT}'`,
-  );
+  PORT = DEFAULT_MDSRV_PORT;
+  console.error(`'MDSRV_PORT' is not set in '.env' file, using port '${PORT}'`);
 }
 
 // Set the target URI.

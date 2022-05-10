@@ -11,41 +11,58 @@ POST is sent to the 'hostname:port/' to send the message.
 
 ## Destinations Supported
 None, message sent to distributor but is not forwarded from there. \
-Discord, requires DISCORD_TOKEN to be set.
+Discord, requires MDSRV_DISCORD_TOKEN to be set.
 
 ## Client Examples
-Get the message format from distributor: rest-client/getHelp.ts \
-Send a message to the distributor: rest-client/sendMessage.ts
+Functional client project: [mdsrv-client](https://github.com/Ohkthx/mdsrv-client). Also available via npm. \
+\
+Basic operations:
+Get the message format from distributor: [rest-client/getHelp.ts](https://github.com/Ohkthx/mdsrv/blob/main/src/rest-client/getHelp.ts) \
+Send a message to the distributor: [rest-client/sendMessage.ts](https://github.com/Ohkthx/mdsrv/blob/main/src/rest-client/sendMessage.ts)
 
 ## Message Format
-{ \
-&nbsp;&nbsp;&nbsp;&nbsp;source: string; \
-&nbsp;&nbsp;&nbsp;&nbsp;sourceId: string; \
-&nbsp;&nbsp;&nbsp;&nbsp;dest: string; \
-&nbsp;&nbsp;&nbsp;&nbsp;destId: string; \
-&nbsp;&nbsp;&nbsp;&nbsp;status: string; \
-&nbsp;&nbsp;&nbsp;&nbsp;value: string; \
-&nbsp;&nbsp;&nbsp;&nbsp;created: string; \
+```json
+{
+	source: string;
+	sourceId: string;
+	dest: string;
+	destId: string;
+	status: string;
+	value: string;
+	created: string;
 }
+```
 
 ## Configuration
-DEFAULT_REST_PORT is '5644'. \
-DISCORD_TOKEN needs to be set to use that feature.
+The following can be changed in a '.env' file located in the root directory of the project or passed as environment variables to modify the configuration of the service.
+```bash
+MDSRV_DEBUG=false
+MDSRV_HOSTNAME=localhost
+MDSRV_PORT=5644
+MDSRV_DISCORD_TOKEN=
+
+```
 
 ## Dockerize Application
 Keep in mind the default port is 5644, if you wish to use a different one then specify that in the Dockerfile and when you go to start the container. \
 \
-Build the application: \
-docker build . -t username/mdsrv \
-\
-Run the docker container: \
-docker run -dp 5644:5644 --name mdsrv username/mdsrv:latest \
-\
-Specify an '.env' file to pass environment variables: \
-docker run --env-file ./.env -dp 5644:5644 --name mdsrv username/mdsrv:latest
+Build the application:
+```bash
+docker build . -t ohkthx/mdsrv
+```
+Run the docker container:
+```bash
+docker run -dp 5644:5644 --name mdsrv ohkthx/mdsrv:latest
+```
+Specify an '.env' file to pass environment variables:
+```bash
+docker run --env-file ./.env -dp 5644:5644 --name mdsrv ohkthx/mdsrv:latest
+```
 
 ## Create Systemd Service
-podman generate systemd --name -f mdsrv \
-mv container-mdsrv.service /etc/systemd/user/. \
-systemctl daemon-reload \
+```bash
+podman generate systemd --name -f mdsrv
+mv container-mdsrv.service /etc/systemd/user/.
+systemctl daemon-reload
 systemctl --user start container-mdsrv.service
+```

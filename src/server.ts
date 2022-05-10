@@ -1,23 +1,24 @@
 import {delay} from '.';
 import {config as envLoad} from 'dotenv';
-import {DEFAULT_REST_PORT, HTTPServer} from './rest';
+import {DEFAULT_MDSRV_PORT, HTTPServer} from './rest';
 import {getHelp} from './rest-client';
 import {sendMessage, TEST_MESSAGE} from './rest-client/sendMessage';
 
 // Load the environment variables into process.env
 envLoad();
-let ENV_REST_PORT = parseInt(process.env.DEFAULT_REST_PORT ?? '');
+let ENV_REST_PORT = parseInt(process.env.MDSRV_PORT ?? '');
 if (isNaN(ENV_REST_PORT)) {
-  ENV_REST_PORT = DEFAULT_REST_PORT;
+  ENV_REST_PORT = DEFAULT_MDSRV_PORT;
   console.error(
-    `'DEFAULT_REST_PORT' is not set in '.env' file, using port '${ENV_REST_PORT}'`,
+    `'MDSRV_PORT' is not set in '.env' file, using port '${ENV_REST_PORT}'`,
   );
 }
 
 let sigintFired: number = 0; // Prevents spam messages from occurring.
 process.on('SIGINT', async () => {
-  if (sigintFired > 0) return;
   sigintFired++;
+  if (sigintFired > 1 && sigintFired < 5) return;
+  else if (sigintFired >= 5) process.exit();
 
   console.warn('\n\nCaught interrupt signal');
 

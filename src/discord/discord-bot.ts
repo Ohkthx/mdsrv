@@ -4,7 +4,7 @@ import {delay} from '..';
 
 // Load the environment variables into process.env
 envLoad();
-const DISCORD_TOKEN: string = process.env.DISCORD_TOKEN ?? '';
+const DISCORD_TOKEN: string = process.env.MDSRV_DISCORD_TOKEN ?? '';
 
 const isArray = function (a: any) {
   return !!a && a.constructor === Array;
@@ -23,7 +23,7 @@ export class DiscordBot {
     // Check if the token is valid.
     if (DISCORD_TOKEN === '') {
       throw new Error(
-        `'DISCORD_TOKEN' is not set in '.env' file, please set it before using this feature.`,
+        `'MDSRV_DISCORD_TOKEN' is not set in '.env' file, please set it before using this feature.`,
       );
     }
 
